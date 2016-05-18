@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="(see list of authors below)" />
+
+<meta name="date" content="2016-05-18" />
+
+<title>DrBats Model Evaluation</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">DrBats Model Evaluation</h1>
+<h4 class="author"><em>(see list of authors below)</em></h4>
+<h4 class="date"><em>2016-05-18</em></h4>
+
+</div>
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>This document is part of the “DrBats” project whose goal is to implement exploratory statistical analysis on large sets of data with uncertainty. The idea is to visualize the results of the analysis in a way that explicitely illustrates the uncertainty in the data.</p>
+<p>The “DrBats” project applies a Bayesian Latent Factor Model.</p>
+<p>This project involves the following persons, listed in alphabetical order :</p>
+<ul>
+<li><p>Bénédicte Fontez (aut)</p></li>
+<li><p>Nadine Hilgert (aut)</p></li>
+<li><p>Susan Holmes (aut)</p></li>
+<li><p><strong>Gabrielle Weinrott</strong> (cre, aut)</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(DrBats)
+mycol&lt;-<span class="kw">c</span>(<span class="st">&quot;#ee204d&quot;</span>, <span class="st">&quot;#1f75fe&quot;</span>, <span class="st">&quot;#1cac78&quot;</span>, <span class="st">&quot;#ff7538&quot;</span>, <span class="st">&quot;#b4674d&quot;</span>, <span class="st">&quot;#926eae&quot;</span>,
+                 <span class="st">&quot;#fce883&quot;</span>, <span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#78dbe2&quot;</span>, <span class="st">&quot;#6e5160&quot;</span>, <span class="st">&quot;#ff43a4&quot;</span>)
+
+<span class="kw">data</span>(<span class="st">&quot;toydata&quot;</span>)
+<span class="kw">data</span>(<span class="st">&quot;stanfit&quot;</span>)</code></pre></div>
+<p>We pick up where the last vignette, <code>modelFit.pdf</code> leaves off, with a post-processed <code>mcmc.list</code> object called <code>codafit.clean</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">codafit &lt;-<span class="st"> </span><span class="kw">coda.obj</span>(stanfit)
+
+data.simul &lt;-<span class="st"> </span>toydata$Y.simul$Y
+
+N =<span class="st"> </span><span class="kw">nrow</span>(data.simul)
+D =<span class="st"> </span>toydata$wlu$D
+P =<span class="st"> </span><span class="kw">ncol</span>(data.simul)
+
+## PCA in the histogram basis
+obs &lt;-<span class="st"> </span>toydata$X
+times &lt;-<span class="st"> </span>toydata$t
+pca.data &lt;-<span class="st"> </span><span class="kw">pca.Deville</span>(obs, times, <span class="dt">t.range =</span> <span class="kw">c</span>(<span class="kw">min</span>(times), <span class="kw">max</span>(times)), <span class="dt">breaks =</span> <span class="dv">15</span>)
+
+## Post-processing landmark information
+rotation &lt;-<span class="st"> </span>toydata$wlu$Q <span class="co"># rotation matrix</span>
+real.W &lt;-<span class="st"> </span>toydata$wlu$W <span class="co"># PCA-determined latent factors</span>
+real.B &lt;-<span class="st"> </span><span class="kw">t</span>(pca.data$Cp[, <span class="dv">1</span>:(toydata$wlu$D)]) <span class="co"># PCA-determined scores</span>
+
+codafit.clean &lt;-<span class="st"> </span><span class="kw">clean.mcmc</span>(N, P, D, codafit, rotation, real.W, real.B)</code></pre></div>
+<p>In order to evaluate the model and visualize the results, we calculate the posterior density and order the iterations to recover quantiles with the <span class="math inline">\(order.postdens()\)</span> function. We can draw a histogram for this posterior (un-normalized) density, once we have specified the original data, the number of latent factors, the chain we want to look at :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">post &lt;-<span class="st"> </span><span class="kw">postdens</span>(codafit.clean, <span class="dt">Y =</span> toydata$Y.simul$Y, <span class="dt">D =</span> toydata$wlu$D, <span class="dt">chain =</span> <span class="dv">1</span>)
+<span class="kw">hist</span>(post, <span class="dt">main =</span> <span class="st">&quot;Histogram of the posterior density&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Density&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<p>The following plot shows the <span class="math inline">\(10\)</span> MCMC estimates for the coordinates of each observation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta.res &lt;-<span class="st"> </span><span class="kw">visbeta</span>(codafit.clean, toydata$Y.simul$Y, toydata$wlu$D, <span class="dt">chain =</span> <span class="dv">1</span>, <span class="dt">axes =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">quant =</span> <span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))
+
+ggplot2::<span class="kw">ggplot</span>(beta.res$mean.df, ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">geom_point</span>(ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">ggtitle</span>(<span class="st">&quot;HMC estimate of the scores&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<p>Other possibilites are available to better visualize the uncertainty of the estimate. You can choose to plot all of the realizations of the MCMC chain at a certain level of confidence defined by the parameter <span class="math inline">\(quant\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggplot2::<span class="kw">ggplot</span>() +
+<span class="st">  </span>ggplot2::<span class="kw">geom_point</span>(<span class="dt">data =</span> beta.res$points.df, ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">geom_point</span>(<span class="dt">data =</span> beta.res$mean.df, ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">ggtitle</span>(<span class="st">&quot;Cloud of HMC estimates of the scores&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<p>Or the convex hull at, for instance, 95% for the estimate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggplot2::<span class="kw">ggplot</span>() +
+<span class="st">  </span>ggplot2::<span class="kw">geom_path</span>(<span class="dt">data =</span> beta.res$contour.df, ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">geom_point</span>(<span class="dt">data =</span> beta.res$mean.df, ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">ggtitle</span>(<span class="st">&quot;Convex hull of HMC estimates of the scores&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAIVBMVEUAAAAAsPYAv30zMzNNTU2jpQDna/Pr6+vy8vL4dm3///9NgKTRAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAIXklEQVR4nO3diZqbuBIFYDHX1lz7/R94EgxoryOkYj/1JXG7Wgj0Uyxxy27zZYhhjt6AsweBQBAIBIFAEAgEgUCsAYrbmmwqejDz1+b3rxHX2Li/TPZLldAFMgDI/KLcvfAtacP89clNV4cyUPg4mXyXByOtU9gUBOQ9Xg/o92R8mPZ0oYROC2TmvTs+TjvcS7uB+XVgAiAzLZs5xHygeOXGOzP9evitxS+85UnQOrfaqYe0mb/o9+sPONtrAuSOBbN87Z66gfktYqBw99UBBaswcwe/dQffCbfPlWJuta6ZCc5/M38wYJPtNQJyFROs0SxrjM6zOSAvs+yxaD+VDkjXX7j+eE1JLrfazEZ67cKHpWXSvATkLRcAGX/9lUDeBod/skAmah1ubgxk0g58oMyIvRVkW5SqJw/0dcfmfHQqA7mKnKtsPv8kQMb7VtgaAvk3FK6XZBhprzVAbowqFbScf4M9GRSUqTvEXGsIFA/UlCso7DVaTgRyBRX37B+ICMgd7WJF1gCF44JA4eaFD16LnJYDypX1LDD/jQbkX5P9bjBQcCMdrCIP5NYUty6t1lsUXcUy25AHCu9ult3jbouiiv5dG0Mg/065DBQd6eE9SLLt85rMvBWF+yBvK8JFTbSi6CGzDVkghhQEAkEgEAQCQSAQBAJBIBAEAkEgECuA/v0T4z9haKbUOiMQSBEIpAgEUgQCKQKBFIFAaj+g1+tFIBFo/EMgYKQJZIVWVwT6HWL/+xsqK7RWpZvdYvcKsveqoJc2kPO5B5D6Sfp+QLqXec/nJkBeaAyAQHLK9yFQJkUgORX4EChNEQikLGr1cCBLIDlFIDkV+RAoThEIpCxu9WiguIAIFKVin/sB9cXVXkmcY7cKSgrofhXUNwACyanUh0BBEEhO2boFCQQWJBBY8LFAtnJBAoEFnwpkaxckEFjwoUC2esEnAllrbw3U+7N5exYgIzzrAuqb3WHtJHRXoN75QecBWjXsdS3vATS+Y3x+V7gmUOccxdGnZUHtWN6YX/wIgeJyYrzcl22783eOPkkFjUA1w64G8nxagdYM84JAL3edb9paW9WqTyOT2g3Ij6atJRC4iq0b5h5AX92T9B2BdC/zXUDitPp7/F+sE2jlMAkEFnwakDxrnEAEAlsLZo0T6FRA/8/GoUBo1jiB1g/zUUBwUvTtgFbGKV4mc3G6CsKTom9XQeu2lkDy1lZMq384UNMwdwH6fD4RkISwEVDNtPqDgD4fT2gkEF8+2wqobZg7AH0+vhBG2AYoKaAzAH3SOA6ocZhPqaC0gM4DlJ6DjgBqHeZDrmKZAjoTUHoftDtQ8zCfcaNoCSRvbe2k6LsArZ6j+Cyg23yO4okq6JFAeh8TeFSwgsKnavEYIFZQ+JRAcmpPoCW0NQi0PkUgkCIQSBEIpHYBer/fAdAhP9VoTO0B9H57QhOBoPA4oPfbF/ous6cJNNP4MZ+DCCRUEHhjwuOAsucgAglXMSDwQKDoPsiUfokxgbRvFK8dOwBpl8vtKkhbg0DrUwQCKQKB1NmB5DcDa2vUAP2zNopArRF9aox0z6QPVDXeVf2XgfQOsaJRl4a0u6NWTf1/A58tgYwp3Xs3A/0dddWCWbdTAS00ekDTgLcDytbkRkDyJa0ZqHA8NQPljtMbXOYrrj3Fc1DU+nn3QRJe03l7P6AbzjD7Ax4Adf3Y5w9P4QOWPp+P7phUOxOAxpIMgHpetC9+TOA4oV9lTO/3u1MjkyoDTQdteIj1A8VT8Ka3hMgLV8X4GrpCPygWGj/6f6qRq6DwHUVybeQiaJXLXbGCQqAF6V8RKEkVxNaG7jmo7yerxZO01jlodQXFdbgaKL2Kdf1ktXiZ17qKhaM94vWgs8/u2Pkqpn2juD3QJp0RCKQIBFIEAikCgRSBQIpAIFU/KgJNwQoKnxJIThEIpAgEUocAXTtYQeFTAskpCWgYhgjo3K8HbdKZADQMntDPgEAe0DD4Qj8CAo1AQxoE8oEKFSS/Zv88oOQcxPdqREC8io1PBaD0PohAAEgKAhGIQJnUnkC3m4KnCyTOURw0x9S35DkriEA3AmoNCeh3dJU/JnAY9LZj8ziigoYrVdAhQKpjUu2MQCC1J9ASyXYQiEBdQIPumFQ7IxBISUDW2gBos1cULwpkrSeECR4HZK0vhAUeBGTT2Ham/dWAhAra5Bw0KI9JtbMyUHoOIlAIFF/FWEExUHwftNU56DZAchCIQLsBhXGplxO/B1TQwAoiEIE2BBquBtQajUDjNC3dMal2djTQNNFPdUyqnREIpAgEUkcD8RyEgHgVw0DaY1Lt7ARA6mNS7YxAILUfUGEK3kCgGSj/KXgEcj4EQpH7mMCrvVzWHnCOYuEcpL/TVTvbB2hEcl/620Gg1IdAWaDXK/s5igTKhLcdA4EI1Ae0wZhUOyMQSBEIpAgEUgQCqYOBBgIBoC3GpNoZgUCKQCBFIJA6FmggkByPeTXxbzRV0CY7XbWzY4G2GZNqZwQCKQKBFIFAikAgRSCQIhBIEQikCARShwAVIvlYoY5Wup2pBIFAEAgEgUAQCMRjfm1EaxAIRAfQMnPImyrc3Mz7Zk0reZWa0Q60/I5a/5fVCs38GcVCq/6+dKMDaPobTBVubea++arta6fYD+grNVsLdIlD7LsWSDp4vM56q1E3dgQSz+RfrzZwnV0DaOVJWhyQ30dlX6cHmi61r7rL/EuuDddZxWUerlIzeKMIgkAgCASCQCAIBIJAIAgEgkAgCATiYCADfonn8XECoGO3AMXRmyd/kOoJ4ujNO7sPgVAcvX08xODqCSStnZf5yweBQBAIBIFAEAgEgUAQCASBQBAIBIFAEAjEf6Wk1Asjte0qAAAAAElFTkSuQmCC" alt /></p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

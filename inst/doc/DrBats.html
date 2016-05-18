@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="(see list of authors below)" />
+
+<meta name="date" content="2016-05-18" />
+
+<title>DrBats Project</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">DrBats Project</h1>
+<h4 class="author"><em>(see list of authors below)</em></h4>
+<h4 class="date"><em>2016-05-18</em></h4>
+
+</div>
+
+
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p>This document is part of the “DrBats” project whose goal is to implement exploratory statistical analysis on large sets of data with uncertainty. The idea is to visualize the results of the analysis in a way that explicitely illustrates the uncertainty in the data.</p>
+<p>The “DrBats” project applies a Bayesian Latent Factor Model.</p>
+<p>This project involves the following persons, listed in alphabetical order :</p>
+<ul>
+<li><p>Bénédicte Fontez (aut)</p></li>
+<li><p>Nadine Hilgert (aut)</p></li>
+<li><p>Susan Holmes (aut)</p></li>
+<li><p><strong>Gabrielle Weinrott</strong> (cre, aut)</p></li>
+</ul>
+</div>
+<div id="bayesian-latent-factor-model" class="section level1">
+<h1>Bayesian Latent Factor Model</h1>
+<div id="notations" class="section level2">
+<h2>Notations</h2>
+<ul>
+<li><p><span class="math inline">\(\mathbf{Y}\)</span> : observed response variable, <span class="math inline">\(y_1\)</span>, …, <span class="math inline">\(y_i\)</span>, …, <span class="math inline">\(y_N\)</span> are the rows each of length <span class="math inline">\(P\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{W}\)</span> : is a low-rank matrix, with <span class="math inline">\(W_1\)</span>, …, <span class="math inline">\(W_D\)</span> columns of length <span class="math inline">\(P\)</span>, <span class="math inline">\(D \leq P\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{\beta}\)</span> : a <span class="math inline">\(D \times N\)</span> matrix of factor loadings, and <span class="math inline">\(\beta_i\)</span> are the factor loadings of the <span class="math inline">\(i^{th}\)</span> individual observed</p></li>
+<li><p><span class="math inline">\(\epsilon\)</span> : the <span class="math inline">\(P \times N\)</span> matrix of errors, with precision <span class="math inline">\(\sigma^2\)</span></p></li>
+</ul>
+<p>We want to visualize <span class="math inline">\(\mathbf{Y}\)</span> in a lower dimension. The <span class="math inline">\(\mathbf{\beta}\)</span> are the coordinates of the observations in the lower dimension, <span class="math inline">\(\mathbf{W}\)</span> is the transition matrix, and <span class="math inline">\(\epsilon\)</span> represents the difference between the low-rank represenation and the actual data.</p>
+</div>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<p>Without loss of generality, we assume that <span class="math inline">\(\mathbf{Y}\)</span> is centered. The Latent Factor Model is therefore:</p>
+<p><span class="math inline">\(\mathbf{Y_i}^T = \mathbf{W}\beta_i + \epsilon_i\)</span></p>
+<p>For identifiability reasons, we will estimate a <span class="math inline">\(P \times D\)</span> positive lower triangular (PLT) matrix, instead of the full matrix <span class="math inline">\(\mathbf{W}\)</span>. We can do a matrix decomposition of <span class="math inline">\(\mathbf{W}\)</span> as an orthogonal matrix and an upper-triangular matrix, <span class="math inline">\(\mathbf{W} = \mathbf{Q} \mathbf{R}\)</span>. As such, we estimate the PLT matrix <span class="math inline">\(\mathbf{R}^T = \left(r_{j, k}\right)_{j = 1:P, k = 1:D}\)</span> with the rotation matrix <span class="math inline">\(\mathbf{Q}\)</span> known (for instance, estimated from the classical PCA):</p>
+<p><span class="math display">\[ \mathbf{R}^T = \begin{pmatrix}
+    r_{1, 1} &amp; 0 &amp; \cdots &amp;  0\\
+    r_{2, 1} &amp; r_{2, 2} &amp; \ddots &amp; 0 \\
+    r_{3, 1} &amp; r_{3, 2} &amp; \ddots &amp;  \vdots \\
+    \vdots &amp;  &amp; \ddots &amp; r_{P, D}
+    \end{pmatrix} \]</span></p>
+<p>We assume for now that all rows of <span class="math inline">\(\mathbf{Y}\)</span> have the same variance, that is <span class="math inline">\(\sigma^2 \mathbf{1}_P\)</span>. The full Bayesian model is:</p>
+\begin{eqnarray}\label{model}
+\mathbf{Y_i}^T|\mathbf{R}^T, \beta_i, \sigma^2 &amp;\overset{i.i.d.}{\sim}&amp;  \mathcal{N}_P(\mathbf{R}^T\beta_i, \sigma^2 \mathbf{1}_P)
+\end{eqnarray}
+\begin{eqnarray*}
+\beta_i &amp; \overset{i.i.d.}{\sim}&amp; \mathcal{N}_D(0, \mathbf{1}_D) \\
+r_{j, k} &amp; \overset{i.i.d.}{\sim}&amp; \mathcal{N}(0, \tau^2) \\
+\sigma^2, \tau^2 &amp;\sim&amp; IG(0.001, 0.001)
+\end{eqnarray*}
+<p>We assume that the non-null entries of the PLT matrix are independent, centered and normal, with same variance <span class="math inline">\(\tau^2\)</span>.</p>
+<p>To integrate information about uncertainty for interval-valued data, we can put an informative prior on the variance of each individual <span class="math inline">\(\mathbf{Y_i}\)</span>. This could be in the form of a weight matrix, for instance <span class="math inline">\(\sigma^2 \Phi_i\)</span> where <span class="math inline">\(\Phi_i\)</span> is either fixed by the user, or estimated.</p>
+<p>Finally, contrary to classical Principal Component Analysis, in this model the factor loadings <span class="math inline">\(\beta_i\)</span> for each individual are random variables. This allows for uncertainty of projection, resulting in non-elliptical confidence regions around the estimated factor loadings.</p>
+</div>
+</div>
+<div id="data-simulation" class="section level1">
+<h1>Data Simulation</h1>
+<p>We can simulate data using <span class="math inline">\(\mathbf{Y_i}^T = \mathbf{R}^T\beta_i + \epsilon_i\)</span> with the function <code>drbats.simul()</code>. We choose a matrix <span class="math inline">\(\mathbf{R}\)</span>, and then build <span class="math inline">\(\mathbf{Y_i}\)</span> by simulating <span class="math inline">\(\beta_i\)</span> and <span class="math inline">\(\epsilon_i\)</span> for each individual. To obtain the full matrix <span class="math inline">\(\mathbf{Y}\)</span>, we stack the rows <span class="math inline">\(\mathbf{Y_i}\)</span>.</p>
+<p>The matrix <span class="math inline">\(\mathbf{R}\)</span> built in this package is, as previously stated, the result of the matrix decomposition of a full low-rank matrix <span class="math inline">\(\mathbf{W}\)</span>. To choose an <span class="math inline">\(\mathbf{R}\)</span> that would resemble something out of an agronomic dataset, we build <span class="math inline">\(\mathbf{W}\)</span> to be the low-rank matrix of an extreme case of data found in agronomy: often times observations are signals that trend over time, with peaks at certain moments over the observation period. In addition, the number of observations can be small when these peaks occur.</p>
+<p>To build <span class="math inline">\(\mathbf{W}\)</span> and subsequently, <span class="math inline">\(\mathbf{R}\)</span>, we first simulate bi-modal signals observed unevenly over time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">require</span>(DrBats))
+set.seed =<span class="st"> </span><span class="dv">45</span>
+toydata &lt;-<span class="st"> </span><span class="kw">drbats.simul</span>(<span class="dt">N =</span> <span class="dv">5</span>,
+                        <span class="dt">P =</span> <span class="dv">150</span>,
+                        <span class="dt">t.range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1000</span>),
+                        <span class="dt">b.range =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.4</span>),
+                        <span class="dt">c.range =</span> <span class="kw">c</span>(<span class="fl">0.6</span>, <span class="fl">0.8</span>),
+                        <span class="dt">b.sd =</span> <span class="dv">5</span>,
+                        <span class="dt">c.sd =</span> <span class="dv">5</span>,
+                        <span class="dt">y.range =</span> <span class="kw">c</span>(-<span class="dv">5</span>, <span class="dv">5</span>),
+                        <span class="dt">sigma2 =</span> <span class="fl">0.2</span>,
+                        <span class="dt">breaks =</span> <span class="dv">8</span>,
+                        <span class="dt">data.type =</span> <span class="st">'sparse.tend'</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matplot</span>(<span class="kw">t</span>(toydata$t), <span class="kw">t</span>(toydata$X), <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">1</span>,
+        <span class="dt">xlab =</span> <span class="st">'Time'</span>, <span class="dt">ylab =</span> <span class="st">' '</span>)
+<span class="kw">points</span>(<span class="kw">t</span>(toydata$t), <span class="kw">t</span>(toydata$X), <span class="dt">pch =</span> <span class="st">'.'</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<p><em>For details please refer to the <code>simul_and_project.pdf</code> vignette.</em></p>
+<p>We set the dimensionality of the low-rank matrix as the number of axes retained after Principal Component Analysis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(toydata$proj.pca$lambda.perc, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),
+        <span class="dt">col =</span> mycol[<span class="dv">1</span>:<span class="kw">length</span>(toydata$proj.pca$lambda.perc)])</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAElBMVEUAAAAcrHgfdf7uIE3/dTj///9UXKhYAAAACXBIWXMAAA7DAAAOwwHHb6hkAAADSUlEQVR4nO3b2VIaUQBF0c7A//9yKqHM1MNupJGWu/aTZV2PssJkwOmizaZn/wBnD1AEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYoARYAiQBGgCFAEKAIUAYqOAZp+d8jcmTr4EgH62LkTBCgCFAGKAEWAIkARoAhQBCgCFN1yiX79Mrr9K+nQQD9drjjrQmMD/TkPaPUooI2jbmJ11p302eZOEKAIUPSuSzS7E/KqxpPmThCg6KZL1LejsYHeZDwPyqOeScdRQMtn3cTqsDvpk82dIEARoAhQBCgCFAGKHgI0LXXsN/qwHgP0bR6gv+YAxRygmAMUc4BiDtBs5d8Hc0AxByjmAMUcoJgDFHOAYg5QzAGKOUAxByjmAMUcoJgbHGjrS4YG2vM/8EMDvb3txTVo4/QUXzI60PUPWnJuYKDLZfslQEC75gDFHKCYGx6o/phleKCaAxRzwwLtfZ/0qEC732k/KNC0+OHSGUCAls+6idVhd9LHzAGKOUAxByjmVoA+5dvLPxTo6yxAgJbmAMUcoJgDFHOAYg5QzAGKOUCzlV2vagwM9N8coJgDFHOAYg5QzAGKOUAxByjmAMUcoJgDFHOAYg5QzA0LdOdr8y8PdO+7O14daFr8cOkMIEDLZ93E6vBD7qTP/Z6GEzzMT19mAdoBdJIr1omBvs/6NED5xyzL//or14n7P72yvf7pRwM9s4XLd5W45dO3fL+bTg/YwQ/zr9fBTxRfr4N/1Xi9AEVuYpE76WioC/ueAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKAEWAIkARoAhQBCgCFAGKfgB4VjIs/Vti6QAAAABJRU5ErkJggg==" alt /></p>
+<pre><code>## [1] &quot;Number of retained axes: 2&quot;</code></pre>
+<p>If you want to use the PCA rotation to anchor the latent factors, the function <code>wlu()</code> does an LU matrix decomposition of the matrix of latent factors.</p>
+</div>
+<div id="model-inference" class="section level1">
+<h1>Model Inference</h1>
+<p>Now we fit a <a href="http://mc-stan.org/">Stan</a> model for the simulated data with a <a href="http://arxiv.org/pdf/1111.4246v1.pdf">No-U-Turn Sampler</a> using the <code>modelFit()</code> function, and the <a href="https://cran.r-project.org/package=rstan">rstan</a> package.</p>
+<p>See the <code>modelFit.pdf</code> vignette for details.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">modelFit</span>(<span class="dt">model =</span> <span class="st">&quot;igPLT&quot;</span>, <span class="dt">prog =</span> <span class="st">&quot;stan&quot;</span>, <span class="dt">Xhisto =</span> toydata$Y.simul$Y,
+                <span class="dt">nchains =</span> <span class="dv">4</span>, <span class="dt">nthin =</span> <span class="dv">50</span>, <span class="dt">niter =</span> <span class="dv">10000</span>, <span class="dt">D =</span> toydata$wlu$D)</code></pre></div>
+<p>The <code>main.modelFit()</code> function outputs an object called <code>fit</code>, containing the posterior estimates for the parameters of the model.</p>
+</div>
+<div id="evaluation" class="section level1">
+<h1>Evaluation</h1>
+<p>For evaluation, we can convert the object to an <code>mcmc.list</code> to apply the diagnostic tests in <a href="https://cran.r-project.org/web/packages/coda/coda.pdf">the coda package manual</a>. Our package also works on <code>mcmc.lists</code> for coherence.</p>
+<p>If post-processing is needed, our package provides a function to repair reflection problems. Refer to the <code>modelEval.pdf</code> vignette for details.</p>
+<p>We can plot the histogram of the posterior density of the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">post &lt;-<span class="st"> </span><span class="kw">postdens</span>(codafit.clean, <span class="dt">Y =</span> toydata$Y.simul$Y, <span class="dt">D =</span> toydata$wlu$D, <span class="dt">chain =</span> <span class="dv">1</span>)
+<span class="kw">hist</span>(post, <span class="dt">main =</span> <span class="st">&quot;Histogram of the posterior density&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Density&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<p>It’s possible to visualize the projection of the observations onto the lower dimensional space with the function <span class="math inline">\(visbeta()\)</span>. We can project onto the latent factors of our choice, here we chose the first and second (we didn’t have a choice actually since there are only two latent factors in the toy example). The uncertainty envelope at <span class="math inline">\(95 \%\)</span> is also plotted if we choose <span class="math inline">\(quant = c(0.05, 0.95)\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta.res &lt;-<span class="st"> </span><span class="kw">visbeta</span>(codafit.clean, toydata$Y.simul$Y, toydata$wlu$D, <span class="dt">chain =</span> <span class="dv">1</span>, <span class="dt">axes =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">quant =</span> <span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>))
+
+ggplot2::<span class="kw">ggplot</span>() +
+<span class="st">  </span>ggplot2::<span class="kw">geom_path</span>(<span class="dt">data =</span> beta.res$contour.df, ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">geom_point</span>(<span class="dt">data =</span> beta.res$mean.df, ggplot2::<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">colour =</span> ind)) +
+<span class="st">  </span>ggplot2::<span class="kw">ggtitle</span>(<span class="st">&quot;Convex hull of HMC estimates of the scores&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAIVBMVEUAAAAAsPYAv30zMzNNTU2jpQDna/Pr6+vy8vL4dm3///9NgKTRAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAIK0lEQVR4nO3dgXqrKBAFYLJrvRvf/4H3NokywDgHFQTNme/upj0lqH8QbWJSN7HMcq1XoPciECgCgSIQKAKBIhCoLUBxW6dG0Y2bv3bv/ztziTsfL6d+WaTKAjkA5N613r3xI2vF5PLsppurMFB4+zGZlhtnLdNYFQQkbq8H9P7mdfN5pFeGULdAbn50X7efB1zEfsPkOHABkPvcV9nFJFC8cCdmpncP76XIgbd8E7TWFvvpIW0m7zpNcoPVXhMgvy+45Wv/rd8w2SIGCh++PKBgEW7u4L3s4Cfh+vmhqC3WN3PB/DfzBxvs1F4jID9igiW6ZYnRPKsBiWR5xKLHaW2H9P2Fy4+XlGTaYpWVFO3Cm6Vl0nwNSNwvAHJy+ZlAYoXDfyqQi1qHqxsDubQDCaRssViA2mJt9OhAk983572zMJAfkfMom+efBMiJH4WtIZA8ofC9JJuR9poD5LexyAha5t/gkQwGlMvbxXxrCBRvqFsfQWGv0f1MID+g4p7ljoiA/N5ujsgcoHC7IFC4euGNaKFpeSBtWM8C83/RBsljsuwGAwUn0sEidCC/pLj12mLFXdFRTFkHHSg8u1keHn9aFI3o97ExBJJnyutA0Z4enoMk6z4vyc1rsXIeJNYivKuLFhTdKOugArGsIhAoAoEiECgCgSIQKAKBIhAoAoHaAPRnKfGlrH7iPwSyYwKBmEAgJhCICQRiAoGYQCAmEIhvBfQo0UmStwCqVI/WK2AXRxCBCKTlBDJjAoGYQCC+E9CDQACoRCdpTiAzJhCICQRiAoGYQCAmEIhPBBqGgUAm0OsfgQwfAqH6Bfr3t8otVVTnTyhioMpzUPyr2OVG0OC/LLwR9wASPgRSgQZ/nC+8EfcAklV4IwiUFcc+BIpiAtnxg7uYGT8eiRCBRPx4pEIEEjGBQEwgFHMOQvF5RzFnfNc1UIFOtJxAZgx3MQJpG+rfXl4HqEY9TntCcXlj/upHCKzeL7cKP8rvEVSiEy1XgV434rMT+gdK9zACBTGBQEwgELcAmq40SbcBqnWYL7wRJwPtLQIRiEBafhegEp2o+T2AlAFEIBmfCfSfWiWAKl7+cgegqtco3gGII4hARYDqXKN45vWJ1xxBJTrRcwKZMYFAbAI9n88IyEJofQFVndgCej6F0IvAfPrs64CeTymEEb4I6JkWgSQQR5DMV4HSOYhAIRCPYq/cAErPgwgEgKwiEIEIpOUEMmMCgbgN0LWLIyjMi9XXAHEEhTmBzJhAICYQiAkEYgKBmEAgNoF+fn4CIL6qEQL9/AihD4Gh8HVAPz9SaFqunibQTCNrnoMIZIwg8MaE8leY/V36eRKF5qD9QH95Nn5+0Gv5udv2fD6PSRQ4igGBHZ+Cp+zLb5XJ/zBv216v4Z0OFJ0HubU/YrwbSF+tNTYpGG3b/Ap5WyBQmUDZl+B9LHKaTh+frLaHqzLQb+U9nBvmIG0AXW4EbZ6ktxzFupiDjgFV/rDbJkexskCiCm9EfvxPWqCTOwOtaAQsvtXJQPabgU8AWt3kaODEefKT/Id9E9BknjOVlNDj3+3cBjSFDXyeVLldbNWooMRqvHUETXGzOa8H5NzauXdRCTBUEhDdJ+mkNtBC0wwojJUZO2Q6Gcg+pDUAUmNVLdKrBGRXL0AZMYFATCAQm0B/d8QAiC/7hECvqSoA4pP2EugzmYe7GIF+gZRjXoFXNW5THEFhvgqUzEF8ZTUCSo9iBAqB4vMgHuYBkF0EIhCBtJxAZkwgEBMIxAQCMd/tA2KOIBDf5fODqsW3ubqjVswRBOK7fAremVUD6L13cQSBuh3Q4/GIgI49H3Q3oNffNAuADj5hVhZoLCuxHejzV/EEkP03Es4+UWwI9EirP6BRj3dLFBhB9nP23weUzEHH3qtxQ6DiR7GSQGMPQOl5UEdApSV6OFEk0HlAox4fkCDQvphAIL4o0EggOx71+IgEgfbFbV72OVrjeN6y0rrACBr1+NBQudUuRiACHdqIkUAAqIYEgfbFBAKxCTSOYwDUyTOK8RTUDGgchRAmOA+oisR2oHGUQljgi4DGtHq60r49kDGCOpiDEp9+5iAChUDxUezgCCp1hVlHQPF50LE5aNj6EV16nBzkOwKyq/hnmKnxeFugGekY0GterCLRFug1/QzHr1H8HFn33r1M1RpBg/9y96P8AaoxVJrvYsKHQCrQMGz9HEUlvuscFNWBjejgKLa3TgFSeAgkY82HQCImEIgJZMfqFEQgH6s+BPIxgUBMIDvWpyACLaX7EGgpAoGYQHa8MgXdEGhnNX4m8WidMIJqDpWuRtC+tR0JZMdjVQkC7YsJBOILAY0EsuOxrgSB9sUEAvF1gEYC2Ws7VpYg0L74MkDj/YGOXaP4DUCHrjD7AqDpGFBtiQ6AjlyC1/qyuxKFPybwwAga7z+CCl0GfHZ8mUm6VXyZw3yr+DIniq1iAoGYQCAmEIgJBGICgbjT1+a3/S5Ss/XW5kYRCBSBQBEIFIFAnfghb9csAoEqBCR+6R+sdmFjca9CXW/sO6PKAP1dGb9i2Y3FvQp1LfqesjxxFQKa5tUZ8GotjbM2YlPXG/vOqbsC9bSLDUOwzbWAcrrufwTJt5HjxtMmoIyu+wUS0229STrrANnnJP3Z48M/t4UbbzjMZ3a9se+M4okiKAKBIhAoAoEiECgCgSIQKAKBIhCoxkAO/BHP9tUBUNs1QNV69ewPUu2gWq9e7z4EQtV6/biLwcUTyFo6D/OXLwKBIhAoAoEiECgCgSIQKAKBIhAoAoEiEKj/AeNv0QLkPXdsAAAAAElFTkSuQmCC" alt /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">W.res &lt;-<span class="st"> </span><span class="kw">visW</span>(codafit.clean, toydata$Y.simul$Y, toydata$wlu$D, <span class="dt">chain =</span> <span class="dv">1</span>, <span class="dt">factors =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+W.res</code></pre></div>
+<pre><code>## $res.W
+##     Lower.est Estimation Upper.est Factor
+## 1   202.47211   325.0718  832.0374      1
+## 2   310.74754  1038.2422 2332.0514      1
+## 3   197.37565   614.9283 1316.8594      1
+## 4    42.13060   549.0696 1279.2705      1
+## 5    24.53771   666.8108 2340.6475      1
+## 6    55.22115   927.8369 2424.4718      1
+## 7    35.36126   581.7619 1338.2913      1
+## 8     0.00000     0.0000    0.0000      2
+## 9   586.89446   815.4527 1081.9533      2
+## 10  207.19608   282.9008  418.2881      2
+## 11  370.17494   512.6679  718.9451      2
+## 12  547.32480   749.1254 1100.3490      2
+## 13 1722.95012  2431.3896 3510.9093      2
+## 14  845.69432  1168.7538 1649.5560      2
+## 
+## $Inertia
+## [1] 0.08413625 0.91586375</code></pre>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>G. Weinrott, B. Fontez, N. Hilgert &amp; S. Holmes, “Modèle Bayésien à facteurs latents pour l’analyse de données fonctionnelles”, Actes des JdS 2016.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

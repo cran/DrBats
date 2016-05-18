@@ -1,0 +1,98 @@
+---
+title: "DrBats Model Evaluation"
+author: "(see list of authors below)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DrBats Model Evaluation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Overview
+
+This document is part of the "DrBats" project whose goal is to implement exploratory statistical analysis on large sets of data with uncertainty.  The idea is to visualize the results of the analysis in a way that explicitely illustrates the uncertainty in the data.
+
+The "DrBats" project applies a Bayesian Latent Factor Model. 
+
+This project involves the following persons, listed in alphabetical order :
+
+* Bénédicte Fontez (aut)
+
+* Nadine Hilgert (aut)
+
+* Susan Holmes (aut)
+
+* **Gabrielle Weinrott** (cre, aut)
+
+```{r, echo = F}
+rm(list=ls())
+```
+
+```{r, messages = F}
+require(DrBats)
+mycol<-c("#ee204d", "#1f75fe", "#1cac78", "#ff7538", "#b4674d", "#926eae",
+                 "#fce883", "#000000", "#78dbe2", "#6e5160", "#ff43a4")
+
+data("toydata")
+data("stanfit")
+```
+
+We pick up where the last vignette, `modelFit.pdf` leaves off, with a post-processed `mcmc.list` object called `codafit.clean`.
+
+```{r}
+codafit <- coda.obj(stanfit)
+
+data.simul <- toydata$Y.simul$Y
+
+N = nrow(data.simul)
+D = toydata$wlu$D
+P = ncol(data.simul)
+
+## PCA in the histogram basis
+obs <- toydata$X
+times <- toydata$t
+pca.data <- pca.Deville(obs, times, t.range = c(min(times), max(times)), breaks = 15)
+
+## Post-processing landmark information
+rotation <- toydata$wlu$Q # rotation matrix
+real.W <- toydata$wlu$W # PCA-determined latent factors
+real.B <- t(pca.data$Cp[, 1:(toydata$wlu$D)]) # PCA-determined scores
+
+codafit.clean <- clean.mcmc(N, P, D, codafit, rotation, real.W, real.B)
+```
+
+In order to evaluate the model and visualize the results, we calculate the posterior density and order the iterations to recover quantiles with the $order.postdens()$ function.  We can draw a histogram for this posterior (un-normalized) density, once we have specified the original data, the number of latent factors, the chain we want to look at : 
+
+```{r}
+post <- postdens(codafit.clean, Y = toydata$Y.simul$Y, D = toydata$wlu$D, chain = 1)
+hist(post, main = "Histogram of the posterior density", xlab = "Density")
+```
+
+The following plot shows the $10$ MCMC estimates for the coordinates of each observation. 
+
+```{r}
+beta.res <- visbeta(codafit.clean, toydata$Y.simul$Y, toydata$wlu$D, chain = 1, axes = c(1, 2), quant = c(0.05, 0.95))
+
+ggplot2::ggplot(beta.res$mean.df, ggplot2::aes(x = x, y = y, colour = ind)) +
+  ggplot2::geom_point(ggplot2::aes(x = x, y = y, colour = ind)) +
+  ggplot2::ggtitle("HMC estimate of the scores")
+```
+
+Other possibilites are available to better visualize the uncertainty of the estimate.  You can choose to plot all of the realizations of the MCMC chain at a certain level of confidence defined by the parameter $quant$: 
+
+```{r}
+ggplot2::ggplot() +
+  ggplot2::geom_point(data = beta.res$points.df, ggplot2::aes(x = x, y = y, colour = ind)) +
+  ggplot2::geom_point(data = beta.res$mean.df, ggplot2::aes(x = x, y = y, colour = ind)) +
+  ggplot2::ggtitle("Cloud of HMC estimates of the scores")
+```
+
+Or the convex hull at, for instance, 95% for the estimate.  
+
+```{r}
+ggplot2::ggplot() +
+  ggplot2::geom_path(data = beta.res$contour.df, ggplot2::aes(x = x, y = y, colour = ind)) +
+  ggplot2::geom_point(data = beta.res$mean.df, ggplot2::aes(x = x, y = y, colour = ind)) +
+  ggplot2::ggtitle("Convex hull of HMC estimates of the scores")
+```

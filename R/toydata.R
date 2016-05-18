@@ -1,0 +1,11 @@
+##' A toy longitudinal data set
+##'
+##' @format A list with 5 elements :
+##'  \describe{
+##'   \item{Y.simul}{a list of simulated data with 3 elements}
+##'   \item{t.simul}{a matrix with 5 rows and 150 columns giving the observation times of the original data}
+##'   \item{X}{the original data matrix with 5 rows and 150 columns}
+##'   \item{proj.pca}{a list with 4 elements : results of the function histoProj(X, t, t.range = c(0, 1000), breaks = 8) }
+##'   \item{wlu}{a list with 4 elements : results of the function W.QR(U, lambda) where U and lambda are the results of the PCA of X}
+##'   }
+"toydata"

@@ -1,0 +1,113 @@
+---
+title: "DrBats Dimension Reduction"
+author: "(see list of authors below)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DrBats Dimension Reduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Overview
+
+This document is part of the "DrBats" project whose goal is to implement exploratory statistical analysis on large sets of data with uncertainty.  The idea is to visualize the results of the analysis in a way that explicitely illustrates the uncertainty in the data.
+
+The "DrBats" project applies a Bayesian Latent Factor Model. 
+
+This project involves the following persons, listed in alphabetical order :
+
+* Bénédicte Fontez (aut)
+
+* Nadine Hilgert (aut)
+
+* Susan Holmes (aut)
+
+* **Gabrielle Weinrott** (cre, aut)
+
+```{r, echo = F}
+rm(list = ls())
+```
+
+## Dimension reduction of a longitudinal dataset
+
+### On simulated data using `drbats.simul()`
+
+```{r, messages = F}
+require(DrBats)
+require(ggplot2)
+st_data <- drbats.simul(N = 10, 
+                 t.range = c(0, 1000),
+                 b.range = c(0.2, 0.4),
+                 c.range = c(0.6, 0.8),
+                 b.sd = 0.5,
+                 c.sd = 0.5,
+                 y.range = c(-5, 5),
+                 sigma2 = 0.2,
+                 breaks = 15,
+                 data.type = 'sparse.tend')
+```
+
+```{r}
+mycol<-c("#ee204d", "#1f75fe", "#1cac78", "#ff7538", "#b4674d", "#926eae",
+                 "#fce883", "#000000", "#78dbe2", "#6e5160", "#ff43a4")
+```
+
+For details check out the `DrBats Data Simulation and Projection` vignette.
+
+Resulting eigenvalues: 
+
+```{r}
+eigenval <- st_data$proj.pca$lambda.perc
+barplot(eigenval, ylim = c(0, 1), col = mycol[1:length(eigenval)])
+```
+
+Plot of the first eigenvectors : 
+
+```{r}
+windows <- st_data$proj.pca$Xt.proj$windows[-15]
+eigenv <- data.frame(windows, st_data$proj.pca$U)
+ggplot(eigenv, aes(x = windows, y = eigenv[ , 2])) +
+  geom_step(aes(colour = mycol[1])) +
+  geom_step(aes(x = windows, y = eigenv[ , 3], colour = mycol[2])) +
+  geom_step(aes(x = windows, y = eigenv[ , 4], colour = mycol[3])) +
+  scale_x_continuous(name = " ") +
+  scale_y_continuous(name =  " ") +
+  scale_colour_discrete(labels=c("Eigenvector 1", "Eigenvector 2", "Eigenvector 3"),
+                        name = " ")
+```
+
+### On real data
+
+```{r}
+suppressPackageStartupMessages(require(fda))
+Canada.temp <- CanadianWeather$monthlyTemp[ , 1:10]
+matplot(Canada.temp, type = 'l', xaxt = "n", xlab = "", ylab = "Temp °C", col = mycol[1:10],
+        lwd = 2)
+axis(side = 1, labels = rownames(Canada.temp), at = 1:12)
+```
+
+The eigenvalues : 
+
+```{r}
+Canada.pca <- pca.Deville(t(Canada.temp), t = t(matrix(rep(1:12, 10), nrow = 12, ncol = 10)), 
+                          t.range = c(1, 12), breaks = 13)
+barplot(Canada.pca$perc.lambda, col = mycol[1:12])
+```
+
+And the eigenvectors : 
+
+```{r}
+eigenv <- data.frame(windows = 1:(13-1), Canada.pca$U.histo) 
+
+ggplot(eigenv, aes(x = windows, y = eigenv[ , 2])) +
+  geom_step(aes(colour = mycol[1])) +
+  geom_step(aes(x = windows, y = eigenv[ , 3], colour = mycol[2])) +
+  geom_step(aes(x = windows, y = eigenv[ , 4], colour = mycol[3])) +
+  scale_x_continuous(name = " ") +
+  scale_y_continuous(name =  " ") +
+  scale_colour_discrete(labels=c("Eigenvector 1", "Eigenvector 2", "Eigenvector 3"),
+                        name = " ")
+```
+
+We can do a weighted PCA using the function `weighted.Deville()`, or Co-inertia analysis using `coinertia.drbats()`...
