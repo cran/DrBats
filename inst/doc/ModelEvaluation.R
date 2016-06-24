@@ -12,30 +12,12 @@ data("stanfit")
 ## ------------------------------------------------------------------------
 codafit <- coda.obj(stanfit)
 
-data.simul <- toydata$Y.simul$Y
-
-N = nrow(data.simul)
-D = toydata$wlu$D
-P = ncol(data.simul)
-
-## PCA in the histogram basis
-obs <- toydata$X
-times <- toydata$t
-pca.data <- pca.Deville(obs, times, t.range = c(min(times), max(times)), breaks = 15)
-
-## Post-processing landmark information
-rotation <- toydata$wlu$Q # rotation matrix
-real.W <- toydata$wlu$W # PCA-determined latent factors
-real.B <- t(pca.data$Cp[, 1:(toydata$wlu$D)]) # PCA-determined scores
-
-codafit.clean <- clean.mcmc(N, P, D, codafit, rotation, real.W, real.B)
-
 ## ------------------------------------------------------------------------
-post <- postdens(codafit.clean, Y = toydata$Y.simul$Y, D = toydata$wlu$D, chain = 1)
+post <- postdens(codafit, Y = toydata$Y.simul$Y, D = toydata$wlu$D, chain = 1)
 hist(post, main = "Histogram of the posterior density", xlab = "Density")
 
 ## ------------------------------------------------------------------------
-beta.res <- visbeta(codafit.clean, toydata$Y.simul$Y, toydata$wlu$D, chain = 1, axes = c(1, 2), quant = c(0.05, 0.95))
+beta.res <- visbeta(codafit, toydata$Y.simul$Y, toydata$wlu$D, chain = 1, axes = c(1, 2), quant = c(0.05, 0.95))
 
 ggplot2::ggplot(beta.res$mean.df, ggplot2::aes(x = x, y = y, colour = ind)) +
   ggplot2::geom_point(ggplot2::aes(x = x, y = y, colour = ind)) +

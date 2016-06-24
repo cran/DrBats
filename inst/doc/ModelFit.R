@@ -11,40 +11,22 @@ data("toydata")
 proj.data <- toydata$Y.simul$Y
 
 ## ---- eval = F-----------------------------------------------------------
-#  stanfit <- modelFit(model = "igPLT", prog = "stan", parallel = T, Xhisto = proj.data,
-#                     nchains = 2, nthin = 10, niter = 1000, D = toydata$wlu$D)
+#  stanfit <- modelFit(model = "PLT", var.prior = "IG", prog = "stan", parallel = T, Xhisto = proj.data,
+#                     nchains = 2, nthin = 10, niter = 1000, R = toydata$wlu$Q)
 
 ## ------------------------------------------------------------------------
 data("stanfit")
 coda.plt <- coda.obj(stanfit)
 
 ## ------------------------------------------------------------------------
-N = nrow(proj.data)
-P = ncol(proj.data)
-
-D = toydata$wlu$D
-
-# PCA in the histogram basis
-obs <- toydata$X
-times <- toydata$t
-pca.data <- pca.Deville(obs, times, t.range = c(min(times), max(times)), breaks = 8)
-
-# Post-processing landmark information
-rotation <- toydata$wlu$Q # rotation matrix
-real.W <- toydata$wlu$W # PCA-determined latent factors
-real.B <- t(pca.data$Cp[ , 1:(toydata$wlu$D)]) # PCA-determined scores
-
-coda.plt.clean <- clean.mcmc(N, P, D, coda.plt, rotation, real.W, real.B)
-
-## ------------------------------------------------------------------------
-post <- postdens(coda.plt.clean, Y = toydata$Y.simul$Y, D = toydata$wlu$D, chain = 1)
+post <- postdens(coda.plt, Y = toydata$Y.simul$Y, D = toydata$wlu$D, chain = 1)
 hist(post, main = "Histogram of the posterior density", xlab = "Density")
 
 ## ------------------------------------------------------------------------
-beta.res <- visbeta(coda.plt.clean, toydata$Y.simul$Y, toydata$wlu$D, chain = 1, axes = c(1, 2), quant = c(0.05, 0.95))
+beta.res <- visbeta(coda.plt, toydata$Y.simul$Y, toydata$wlu$D, chain = 1, axes = c(1, 2), quant = c(0.05, 0.95))
 
 ggplot2::ggplot() +
-  ggplot2::geom_path(data = beta.res$contour.df, ggplot2::aes(x = x, y = y, colour = ind)) +
-  ggplot2::geom_point(data = beta.res$mean.df, ggplot2::aes(x = x, y = y, colour = ind)) +
-  ggplot2::ggtitle("Convex hull of HMC estimates of the scores")
+ggplot2::geom_path(data = beta.res$contour.df, ggplot2::aes(x = x, y = y, colour = ind)) +
+ggplot2::geom_point(data = beta.res$mean.df, ggplot2::aes(x = x, y = y, colour = ind)) +
+ggplot2::ggtitle("Convex hull of HMC estimates of the scores")
 

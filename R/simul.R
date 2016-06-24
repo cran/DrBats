@@ -1,7 +1,20 @@
 # Aim: simulate data to test a Bayesian Latent Factor Model
 # Persons : Gabrielle Weinrott [cre, aut]
 
-
+# Function to generate a set of signals
+#
+# N : number of individuals
+# P : number of observations
+# b.range : range of location of first gaussian
+# c.range : range of location for second gaussian
+# b.sd : standard dev of first gaussian
+# c.sd : standard dev of second gaussian
+# a.range : range of values for slope
+# y.range : range of loaction for y-intercept
+# amp : amplitude of cosinus function
+# per : period of cosinus function
+# data.type : type of data to generate (options: sparse, sparse.tend, sparse.tend.cos)
+#
 gen_X <- function(N = 10,
                   P = 150,
                   b.range = c(0.2, 0.35),
@@ -60,6 +73,14 @@ gen_X <- function(N = 10,
 }
 
 
+# Simulate a matrix of observation times
+#
+# N : number of individuals
+# P : number of observations
+# t.range : range of times for the P observations
+# b.range : range of location of first gaussian
+# c.range : range of location for second gaussian
+#
 simul.matrix.t <- function(N = 10, P = 150, t.range = c(0, 1000),
                            b.range = c(0.2, 0.4), c.range = c(0.6, 0.8)){
 
@@ -191,7 +212,14 @@ W.QR <- function(U, lambda){
   return(res)
 }
 
-
+# Simulate a data matrix Y
+#
+# N : number of individuals
+# W : a matrix of latent factors
+# D : the number of latent factors (ncol(W))
+# R : a rotation matrix
+# sigma2 : variance of the error
+#
 simul.matrix.Y <- function(N = 10,
                            W,
                            D,
@@ -330,6 +358,13 @@ drbats.simul <- function(N = 10,
 
 # Aim: project longitudinal data onto a histogram basis
 
+# Use the rectangle method to calculate the area under a
+# curve Xi(ti)
+#
+# Xi : a vector of observations
+# ti : a vector of observation times corresponding to Xi
+# windows : the windows of time on which to use the rectangle method
+#
 intRec <- function(Xi,
                    ti,
                    windows){

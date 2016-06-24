@@ -5,11 +5,14 @@
 \title{Fit a Bayesian Latent Factor to a data set
 using STAN}
 \usage{
-modelFit(model = "igPLT", prog = "stan", parallel = TRUE, Xhisto = NULL,
-  nchains = 4, nthin = 10, niter = 10000, D)
+modelFit(model = "PLT", var.prior = "IG", prog = "stan",
+  parallel = TRUE, Xhisto = NULL, nchains = 4, nthin = 10,
+  niter = 10000, R = NULL)
 }
 \arguments{
-\item{model}{a string indicating the type of model ("igPLT", "cauchyPLT" or "igsparse", default = "PLT")}
+\item{model}{a string indicating the type of model ("PLT", or sparse", default = "PLT")}
+
+\item{var.prior}{the family of priors to use for the variance parameters ("IG" for inverse gamma, or "cauchy")}
 
 \item{prog}{a string indicating the MCMC program to use (default = "stan")}
 
@@ -23,7 +26,7 @@ modelFit(model = "igPLT", prog = "stan", parallel = TRUE, Xhisto = NULL,
 
 \item{niter}{number of iterations (default = 1e4)}
 
-\item{D}{number of latent factors}
+\item{R}{rotation matrix of the same dimension as the number of desired latent factors}
 }
 \value{
 stanfit, a STAN object
