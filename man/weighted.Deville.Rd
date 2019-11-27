@@ -44,4 +44,3 @@ res.weighted
 \author{
 Gabrielle Weinrott
 }
-

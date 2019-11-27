@@ -31,4 +31,3 @@ hist(dens)
 \author{
 Gabrielle Weinrott
 }
-

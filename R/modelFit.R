@@ -21,7 +21,7 @@
 ##'
 ##'
 ##' @export
-##'
+##' @import rstan
 modelFit <- function(model = "PLT",
                      var.prior = "IG",
                      prog = "stan",

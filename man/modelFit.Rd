@@ -5,9 +5,17 @@
 \title{Fit a Bayesian Latent Factor to a data set
 using STAN}
 \usage{
-modelFit(model = "PLT", var.prior = "IG", prog = "stan",
-  parallel = TRUE, Xhisto = NULL, nchains = 4, nthin = 10,
-  niter = 10000, R = NULL)
+modelFit(
+  model = "PLT",
+  var.prior = "IG",
+  prog = "stan",
+  parallel = TRUE,
+  Xhisto = NULL,
+  nchains = 4,
+  nthin = 10,
+  niter = 10000,
+  R = NULL
+)
 }
 \arguments{
 \item{model}{a string indicating the type of model ("PLT", or sparse", default = "PLT")}
@@ -35,10 +43,9 @@ stanfit, a STAN object
 Fit a Bayesian Latent Factor to a data set
 using STAN
 }
-\author{
-Gabrielle Weinrott
-}
 \references{
 The Stan Development Team Stan Modeling Language User's Guide and Reference Manual. http://mc-stan.org/
 }
-
+\author{
+Gabrielle Weinrott
+}

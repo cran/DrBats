@@ -38,4 +38,3 @@ res.proj
 \author{
 Gabrielle Weinrott
 }
-

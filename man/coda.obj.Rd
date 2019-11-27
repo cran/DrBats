@@ -24,4 +24,3 @@ head(coda.fit)
 \author{
 Gabrielle Weinrott
 }
-

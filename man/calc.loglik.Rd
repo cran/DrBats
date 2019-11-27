@@ -31,4 +31,3 @@ Calculate the log likelihood of the model
 Gabrielle Weinrott
 }
 \keyword{internal}
-

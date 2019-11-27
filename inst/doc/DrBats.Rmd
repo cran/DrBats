@@ -145,7 +145,7 @@ data("stanfit")
 
 # Evaluation
 
-For evaluation, we can convert the object to an `mcmc.list` to apply the diagnostic tests in [the coda package manual](https://cran.r-project.org/web/packages/coda/coda.pdf).  Our package also works on `mcmc.lists` for coherence.
+For evaluation, we can convert the object to an `mcmc.list` to apply the diagnostic tests in [the coda package manual](https://CRAN.R-project.org/package=coda/coda.pdf).  Our package also works on `mcmc.lists` for coherence.
 
 ```{r, echo = F}
 codafit <- coda.obj(stanfit)

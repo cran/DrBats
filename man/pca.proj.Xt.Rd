@@ -35,4 +35,3 @@ pca.proj.Xt(res$X, res$t.simul, t.range = c(0, 100), breaks = 8)
 \author{
 Gabrielle Weinrott
 }
-

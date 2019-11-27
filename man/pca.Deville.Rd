@@ -35,10 +35,9 @@ res.pca <- pca.Deville(res$X, res$t.simul, t.range = c(5, 100), breaks = 8)
 res.pca
 
 }
-\author{
-Gabrielle Weinrott
-}
 \references{
 JC Deville, "Methodes statisiques et numeriques de l'analyse harmonique", Annales de l'INSEE, 1974.
 }
-
+\author{
+Gabrielle Weinrott
+}

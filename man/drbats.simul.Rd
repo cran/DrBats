@@ -4,10 +4,23 @@
 \alias{drbats.simul}
 \title{Main simulation function}
 \usage{
-drbats.simul(N = 10, P = 150, t.range = c(0, 1000), b.range = c(0.2,
-  0.4), c.range = c(0.6, 0.8), b.sd = 2, c.sd = 2, a.range = c(-0.4,
-  0.4), y.range = c(0, 10), amp = 10, per = 12, data.type = "sparse",
-  breaks = 15, sigma2 = 0.2, seed = NULL)
+drbats.simul(
+  N = 10,
+  P = 150,
+  t.range = c(0, 1000),
+  b.range = c(0.2, 0.4),
+  c.range = c(0.6, 0.8),
+  b.sd = 2,
+  c.sd = 2,
+  a.range = c(-0.4, 0.4),
+  y.range = c(0, 10),
+  amp = 10,
+  per = 12,
+  data.type = "sparse",
+  breaks = 15,
+  sigma2 = 0.2,
+  seed = NULL
+)
 }
 \arguments{
 \item{N}{integer number of functions to simulate (default = 10)}
@@ -65,4 +78,3 @@ matplot(t(t), t(X), type = 'l', xlab = "Time", ylab = "X")
 \author{
 Gabrielle Weinrott
 }
-

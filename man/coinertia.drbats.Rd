@@ -5,8 +5,14 @@
 \title{Perform Coinertia Analysis on the PCA
 of the Weighted PCA and Deville's PCA}
 \usage{
-coinertia.drbats(X.histo = NULL, Qp = NULL, X = NULL, t = NULL,
-  t.range = c(0, 1000), breaks)
+coinertia.drbats(
+  X.histo = NULL,
+  Qp = NULL,
+  X = NULL,
+  t = NULL,
+  t.range = c(0, 1000),
+  breaks
+)
 }
 \arguments{
 \item{X.histo}{the data matrix projected onto the histogram basis}
@@ -38,4 +44,3 @@ res.coinertia
 \author{
 Gabrielle Weinrott
 }
-

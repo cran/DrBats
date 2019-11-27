@@ -12,4 +12,3 @@ stanfit
 A stanfit object fitted to the toydata
 }
 \keyword{datasets}
-
