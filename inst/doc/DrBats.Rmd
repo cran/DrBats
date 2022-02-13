@@ -127,7 +127,7 @@ If you want to use the PCA rotation to anchor the latent factors, the function `
 
 # Model Inference
 
-Now we fit a [Stan](http://mc-stan.org/) model for the simulated data with a [No-U-Turn Sampler](http://arxiv.org/pdf/1111.4246v1.pdf) using the `modelFit()` function, and the [rstan](https://cran.r-project.org/package=rstan) package.
+Now we fit a [Stan](https://mc-stan.org/) model for the simulated data with a [No-U-Turn Sampler](https://arxiv.org/pdf/1111.4246v1.pdf) using the `modelFit()` function, and the [rstan](https://cran.r-project.org/package=rstan) package.
 
 See the `modelFit.pdf` vignette for details.
 

@@ -4,7 +4,9 @@
 \name{stanfit}
 \alias{stanfit}
 \title{A stanfit object fitted to the toydata}
-\format{A large stanfit object}
+\format{
+A large stanfit object
+}
 \usage{
 stanfit
 }
